@@ -20,14 +20,14 @@ class ComponentTypeModel {
      * @returns {Promise<*>}
      */
     // 创建文章类别
-    static async createComponent_type(data) {
+    static async create(data) {
         return await Component_type.create({
             categoryName: data.categoryName, //标题
             categoryCreater: data.categoryCreater
         });
     }
     // 更新文章类别
-    static async upDataComponent_type(data) {
+    static async upDate(data) {
         return await Component_type.update({
             categoryName: data.categoryName, //标题
             categoryCreater: data.categoryCreater
@@ -38,7 +38,7 @@ class ComponentTypeModel {
         });
     }
     // 对文章进行删除
-    static async delComponent_type(id) {
+    static async del(id) {
         return await Component_type.destroy({
             where: {
                 id
@@ -59,7 +59,7 @@ class ComponentTypeModel {
      * @param id 文章ID
      * @returns {Promise<Model>}
      */
-    static async getComponent_typeDetail(id) {
+    static async getDetail(id) {
         return await Component_type.findOne({
             where: {
                 id
@@ -67,7 +67,7 @@ class ComponentTypeModel {
         });
     }
     // 对文章类别进行搜索分页显示
-    static async finAllComponent_type(data) {
+    static async finAll(data) {
         let offset = data.pageSize * (data.currentPage - 1);
         let limit = parseInt(data.pageSize);
 

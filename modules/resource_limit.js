@@ -8,12 +8,12 @@ const {
 } = require("sequelize");
 
 // 引入数据表模型
-const Component = Sequelize.import('../schema/Component.js');
-Component.sync({
+const Resource_limit = Sequelize.import('../schema/resource_limit.js');
+Resource_limit.sync({
     force: false
 }); //自动创建表
 
-class ComponentModel {
+class ResourceModel {
     /**
      * 创建文章模型
      * @param data
@@ -21,14 +21,14 @@ class ComponentModel {
      */
     // 创建文章类别
     static async create(data) {
-        return await Component.create({
+        return await Resource_limit.create({
             categoryName: data.categoryName, //标题
             categoryCreater: data.categoryCreater
         });
     }
     // 更新文章类别
     static async upDate(data) {
-        return await Component.update({
+        return await Resource_limit.update({
             categoryName: data.categoryName, //标题
             categoryCreater: data.categoryCreater
         }, {
@@ -39,7 +39,7 @@ class ComponentModel {
     }
     // 对文章进行删除
     static async del(id) {
-        return await Component.destroy({
+        return await Resource_limit.destroy({
             where: {
                 id
             }
@@ -48,7 +48,7 @@ class ComponentModel {
     
     // 对文章批量删除
     static async bacthDel(data) {
-                return await Component.destroy({
+                return await Resource_limit.destroy({
                     where: {
                         id: data
                     }
@@ -60,7 +60,7 @@ class ComponentModel {
      * @returns {Promise<Model>}
      */
     static async getDetail(id) {
-        return await Component.findOne({
+        return await Resource_limit.findOne({
             where: {
                 id
             }
@@ -88,7 +88,7 @@ class ComponentModel {
            
         }
 
-        return await Component.findAndCountAll({
+        return await Resource_limit.findAndCountAll({
             
             where: {
                 [Op.and]:criteria
@@ -108,4 +108,4 @@ class ComponentModel {
 
 }
 
-module.exports = ComponentModel;
+module.exports = ResourceModel;
