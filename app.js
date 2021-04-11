@@ -44,18 +44,10 @@ const remberLoger = require('./logger')
 const koajwt = require('koa-jwt')
 const cors = require('koa2-cors')
 
-const {
-    indexRouter,
-    userRouter,
-    articleTypeRouter,
-    blogRouter,
-    uploadRouter,
-    carouselRouter,
-    musicRouter,
-    wxRouter,
-    source_mysqlRouter,
-    targetRouter
-} = require('./routes/mian.js')
+
+
+const registerRouter = require('./routes/mian.js');
+
 
 
 
@@ -86,51 +78,8 @@ app.use(logger((str) => {
 }))
 
 app.use(cors());
-// routes
-app.use(indexRouter.routes(),indexRouter.allowedMethods());
-// 导入登录路由
-app.use(userRouter.routes(),userRouter.allowedMethods());
-// 文章类别路由
-app.use(articleTypeRouter.routes(),articleTypeRouter.allowedMethods());
-// 文章路由
-app.use(blogRouter.routes(),blogRouter.allowedMethods());
 
-// 文件上传路由
-
-app.use(uploadRouter.routes(),uploadRouter.allowedMethods());
-
-// 轮播路由
-
-app.use(carouselRouter.routes(),carouselRouter.allowedMethods());
-
-// // 音乐列表路由
-
-app.use(musicRouter.routes(),musicRouter.allowedMethods());
-
-// // 微信登录列表
-
-app.use(wxRouter.routes(),wxRouter.allowedMethods());
-
-
-
-
-app.use(source_mysqlRouter.routes(),source_mysqlRouter.allowedMethods());
-
-
-
-app.use(targetRouter.routes(),targetRouter.allowedMethods());
-
-
-
-
-
-
-
-
-
-
-
-
+app.use(registerRouter());
 
 
 
@@ -160,7 +109,7 @@ app.use(async (ctx, next) => {
 app.use(koajwt({
     secret: '123456'
 }).unless({
-    path: [/^\/user\/regist/, /^\/user\/login/, /^\/public\*/,/^\/static/]
+    path: [/^\/user\/regist/, /^\/user\/login/, /^\/public\*/, /^\/static/]
 
 }))
 module.exports = app

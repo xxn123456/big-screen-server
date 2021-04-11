@@ -1,33 +1,19 @@
-const indexRouter = require('./index');
-const userRouter =require('./user');
-const articleTypeRouter = require('./articleType.js');
-const blogRouter=require('./blog.js');
 
-const uploadRouter = require('./upload.js')
+const compose = require('koa-compose')
+const glob = require('glob')
+const { resolve } = require('path')
 
-const carouselRouter = require('./carousel.js')
+registerRouter = () => {
+    let routers = [];
 
-const musicRouter  = require('./music.js')
-
-
-const wxRouter = require('./wxLogin.js')
-
-const source_mysqlRouter = require('./source_mysql.js')
-
-
-const targetRouter = require('./target.js')
-
-
-
-module.exports={
-    indexRouter,
-    userRouter,
-    articleTypeRouter,
-    blogRouter,
-    uploadRouter,
-    carouselRouter,
-    musicRouter,
-    wxRouter,
-    source_mysqlRouter,
-    targetRouter
+    glob.sync(resolve(__dirname, './', '**/*.js'))
+        .filter(value => (value.indexOf('mian.js') === -1))
+        .map(router => {
+            routers.push(require(router).routes())
+            routers.push(require(router).allowedMethods())
+        })
+    return compose(routers)
 }
+
+
+module.exports = registerRouter

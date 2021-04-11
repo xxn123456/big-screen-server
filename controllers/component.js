@@ -1,30 +1,30 @@
-const mysqlModel = require('../modules/source_mysql.js')
+const componentModel = require('../modules/component.js')
 
-class mysqlController {
+class componentController {
 
 
-    // 创建数据源
+    // 创建组件
     static async create(ctx) {
 
 
         let req = ctx.request.body;
         try {
-            console.log("进入构造函数控制层");
-            const data = await mysqlModel.create(req);
+           
+            const data = await componentModel.create(req);
 
-            console.log("进入构造函数控制层",data);
+           
         
             ctx.response.status = 200;
             ctx.body = {
                 code: 200,
-                msg: '创建数据源成功',
+                msg: '创建组件成功',
                 data
             }
         } catch (err) {
             ctx.response.status = 416;
             ctx.body = {
                 code: 416 ,
-                msg: '创建数据源失败',
+                msg: '创建组件失败',
                 data: err
             }
 
@@ -33,27 +33,27 @@ class mysqlController {
 
     }
 
-    // 修改数据源
+    // 修改组件
 
     static async update(ctx) {
         let req = ctx.request.body;
         try {
              
-            let ret = await mysqlModel.update(req);
+            let ret = await componentModel.update(req);
            
-            let blogDetail =await mysqlModel.detail(req.id);
+            let blogDetail =await componentModel.detail(req.id);
         
             ctx.response.status = 200;
             ctx.body = {
                 code: 200,
-                msg: '修改数据源成功',
+                msg: '修改组件成功',
                 data: blogDetail
             }
         } catch (err) {
             ctx.response.status = 416;
             ctx.body = {
                 code: 416 ,
-                msg: '修改数据源失败',
+                msg: '修改组件失败',
                 data: err
             }
 
@@ -62,25 +62,25 @@ class mysqlController {
 
     }
 
-    // 删除数据源
+    // 删除组件
 
     static async del(ctx) {
         let req = ctx.request.body;
         try {
              
-            const data = await mysqlModel.del(req.id);
+            const data = await componentModel.del(req.id);
         
             ctx.response.status = 200;
             ctx.body = {
                 code: 200,
-                msg: '删除数据源成功',
+                msg: '删除组件成功',
                 data
             }
         } catch (err) {
             ctx.response.status = 416;
             ctx.body = {
                 code: 416 ,
-                msg: '删除数据源失败',
+                msg: '删除组件失败',
                 data: err
             }
 
@@ -96,19 +96,19 @@ class mysqlController {
         let req = ctx.request.body;
         if (req.batchList) {
             try {
-                //创建数据源模型
-                const data=await mysqlModel.bacthDel(req.batchList);
+                //创建组件模型
+                const data=await componentModel.bacthDel(req.batchList);
                 ctx.response.status = 200;
                 ctx.body = {
                     code: 200,
                     articleType:data,
-                    des: '批量删除数据源类别成功',
+                    des: '批量删除组件成功',
                 }
             } catch (err) {
                 ctx.response.status = 412;
                 ctx.body = {
                     code: 412,
-                    msg: '批量删除数据源类别失败',
+                    msg: '批量删除组件失败',
                     des: err
                 }
             }
@@ -126,28 +126,28 @@ class mysqlController {
     static async findAll(ctx) {
         let req = ctx.request.body;
 
-        let  data = await mysqlModel.findAll(req);
+        let  data = await componentModel.findAll(req);
         ctx.response.status = 200;
         ctx.body = {
             code: 200,
-            msg: '查找数据源成功',
+            msg: '查找组件成功',
             data
         }
 
       
         // try {
-        //     let  data = await mysqlModel.finAll(req);
+        //     let  data = await componentModel.finAll(req);
         //     ctx.response.status = 200;
         //     ctx.body = {
         //         code: 200,
-        //         msg: '查找数据源成功',
+        //         msg: '查找组件成功',
         //         data
         //     }
         // } catch (err) {
         //     ctx.response.status = 416;
         //     ctx.body = {
         //         code: 416 ,
-        //         msg: '查找数据源失败',
+        //         msg: '查找组件失败',
         //         data: err
         //     }
 
@@ -156,23 +156,23 @@ class mysqlController {
 
     }
 
-    // 查找数据源详情
+    // 查找组件详情
 
     static async findOne(ctx) {
         let req = ctx.request.body;
         try {
-            let  data = await mysqlModel.detail(req.id);
+            let  data = await componentModel.detail(req.id);
             ctx.response.status = 200;
             ctx.body = {
                 code: 200,
-                msg: '查找数据源详情成功',
+                msg: '查找组件详情成功',
                 data
             }
         } catch (err) {
             ctx.response.status = 416;
             ctx.body = {
                 code: 416 ,
-                msg: '查找数据源详情失败',
+                msg: '查找组件详情失败',
                 data: err
             }
 
@@ -182,4 +182,4 @@ class mysqlController {
     }
 
 }
-module.exports = mysqlController
+module.exports =componentController
