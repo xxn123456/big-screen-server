@@ -68,5 +68,5 @@ module.exports = function(sequelize, DataTypes) {
          */
         freezeTableName: true
     });
-    return Component_type
+    return Menu
 }
