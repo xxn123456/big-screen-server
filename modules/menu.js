@@ -22,15 +22,21 @@ class MenuModel {
     // 创建文章类别
     static async create(data) {
         return await Menu.create({
-            categoryName: data.categoryName, //标题
-            categoryCreater: data.categoryCreater
+            name: data.name, 
+            path: data.path,
+            router_compent:data.router_compent,
+            p_id:data.p_id,
+            role_router:data.role_router
         });
     }
     // 更新文章类别
-    static async upDate(data) {
+    static async update(data) {
         return await Menu.update({
-            categoryName: data.categoryName, //标题
-            categoryCreater: data.categoryCreater
+            name: data.name, 
+            path: data.path,
+            router_compent:data.router_compent,
+            p_id:data.p_id,
+            role_router:data.role_router
         }, {
             where: {
                 id: data.id
@@ -67,33 +73,11 @@ class MenuModel {
         });
     }
     // 对文章类别进行搜索分页显示
-    static async finAll(data) {
+    static async findAll(data) {
         let offset = data.pageSize * (data.currentPage - 1);
         let limit = parseInt(data.pageSize);
 
-        let criteria = [];
-
-        if(data.categoryName){
-            criteria.push({categoryName:data.categoryName})
-           
-        }
-        if(data.startTime||data.endTime){
-            criteria.push({
-                            
-                createdAt: {
-                    [Op.between]: [new Date(data.startTime), new Date(data.endTime)]
-
-                }
-            })
-           
-        }
-
         return await Menu.findAndCountAll({
-            
-            where: {
-                [Op.and]:criteria
-            
-            },
             //offet去掉前多少个数据
             offset,
             //limit每页数据数量
@@ -103,6 +87,14 @@ class MenuModel {
         
 
    
+
+    }
+
+    static async findAllMenu(data) {
+    
+        return await Menu.findAll({})
+        
+
 
     }
 

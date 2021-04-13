@@ -9,6 +9,8 @@ const {
 
 // 引入数据表模型
 const Role = Sequelize.import('../schema/role.js');
+
+
 Role.sync({
     force: false
 }); //自动创建表
@@ -22,15 +24,17 @@ class RoleModel {
     // 创建文章类别
     static async create(data) {
         return await Role.create({
-            categoryName: data.categoryName, //标题
-            categoryCreater: data.categoryCreater
+            name: data.name,
+            role_router: data.role_router,
+            role_screen: data.role_screen
         });
     }
     // 更新文章类别
-    static async upDate(data) {
+    static async update(data) {
         return await Role.update({
-            categoryName: data.categoryName, //标题
-            categoryCreater: data.categoryCreater
+            name: data.name,
+            role_router: data.role_router,
+            role_screen: data.role_screen
         }, {
             where: {
                 id: data.id
@@ -67,32 +71,19 @@ class RoleModel {
         });
     }
     // 对文章类别进行搜索分页显示
-    static async finAll(data) {
+    static async findAll(data) {
         let offset = data.pageSize * (data.currentPage - 1);
         let limit = parseInt(data.pageSize);
 
         let criteria = [];
 
-        if(data.categoryName){
-            criteria.push({categoryName:data.categoryName})
-           
+        if(data.name){
+            criteria.push({name:data.name})
         }
-        if(data.startTime||data.endTime){
-            criteria.push({
-                            
-                createdAt: {
-                    [Op.between]: [new Date(data.startTime), new Date(data.endTime)]
-
-                }
-            })
-           
-        }
-
+    
         return await Role.findAndCountAll({
-            
             where: {
                 [Op.and]:criteria
-            
             },
             //offet去掉前多少个数据
             offset,
@@ -101,9 +92,13 @@ class RoleModel {
 
         })
         
+    }
 
-   
-
+      // 查询所有角色
+    static async findAllRole(data) {
+    
+        return await Role.findAll({})
+        
     }
 
 }

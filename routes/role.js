@@ -7,7 +7,9 @@ const roleController= require('../controllers/role.js');
 router.post('/create', roleController.create)
 router.post('/findAll', roleController.findAll)
 
-router.post('/updata', roleController.update)
+router.get('/findAllRole',roleController.findAllRole)
+
+router.post('/update', roleController.update)
 
 router.post('/del', roleController.del)
 

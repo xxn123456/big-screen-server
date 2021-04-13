@@ -3,7 +3,7 @@ const menuModel = require('../modules/menu.js')
 class menuController {
 
 
-    // 创建组件类别
+    // 创建菜单
     static async create(ctx) {
 
 
@@ -16,14 +16,14 @@ class menuController {
             ctx.response.status = 200;
             ctx.body = {
                 code: 200,
-                msg: '创建组件类别成功',
+                msg: '创建菜单成功',
                 data
             }
         } catch (err) {
             ctx.response.status = 416;
             ctx.body = {
                 code: 416 ,
-                msg: '创建组件类别失败',
+                msg: '创建菜单失败',
                 data: err
             }
 
@@ -32,27 +32,30 @@ class menuController {
 
     }
 
-    // 修改组件类别
+    // 修改菜单
 
     static async update(ctx) {
         let req = ctx.request.body;
         try {
              
-            let ret = await menuModel.update(req);
+            console.log("开始修改");
+            let data = await menuModel.update(req);
+
+            console.log("修改得到数据".data)
            
-            let blogDetail =await menuModel.detail(req.id);
+    
         
             ctx.response.status = 200;
             ctx.body = {
                 code: 200,
-                msg: '修改组件类别成功',
-                data: blogDetail
+                msg: '修改菜单成功',
+                data
             }
         } catch (err) {
             ctx.response.status = 416;
             ctx.body = {
                 code: 416 ,
-                msg: '修改组件类别失败',
+                msg: '修改菜单失败',
                 data: err
             }
 
@@ -61,7 +64,7 @@ class menuController {
 
     }
 
-    // 删除组件类别
+    // 删除菜单
 
     static async del(ctx) {
         let req = ctx.request.body;
@@ -72,14 +75,14 @@ class menuController {
             ctx.response.status = 200;
             ctx.body = {
                 code: 200,
-                msg: '删除组件类别成功',
+                msg: '删除菜单成功',
                 data
             }
         } catch (err) {
             ctx.response.status = 416;
             ctx.body = {
                 code: 416 ,
-                msg: '删除组件类别失败',
+                msg: '删除菜单失败',
                 data: err
             }
 
@@ -95,19 +98,19 @@ class menuController {
         let req = ctx.request.body;
         if (req.batchList) {
             try {
-                //创建组件类别模型
+                //创建菜单模型
                 const data=await menuModel.bacthDel(req.batchList);
                 ctx.response.status = 200;
                 ctx.body = {
                     code: 200,
                     articleType:data,
-                    des: '批量删除组件类别类别成功',
+                    des: '批量删除菜单类别成功',
                 }
             } catch (err) {
                 ctx.response.status = 412;
                 ctx.body = {
                     code: 412,
-                    msg: '批量删除组件类别类别失败',
+                    msg: '批量删除菜单类别失败',
                     des: err
                 }
             }
@@ -124,38 +127,59 @@ class menuController {
 
     static async findAll(ctx) {
         let req = ctx.request.body;
-
-        let  data = await menuModel.findAll(req);
-        ctx.response.status = 200;
-        ctx.body = {
-            code: 200,
-            msg: '查找组件类别成功',
-            data
-        }
-
       
-        // try {
-        //     let  data = await SmenuModel.finAll(req);
-        //     ctx.response.status = 200;
-        //     ctx.body = {
-        //         code: 200,
-        //         msg: '查找组件类别成功',
-        //         data
-        //     }
-        // } catch (err) {
-        //     ctx.response.status = 416;
-        //     ctx.body = {
-        //         code: 416 ,
-        //         msg: '查找组件类别失败',
-        //         data: err
-        //     }
+        try {
+            let  data = await menuModel.findAll(req);
 
-        // }
+           
+            ctx.response.status = 200;
+            ctx.body = {
+                code: 200,
+                msg: '查找菜单成功',
+                data
+            }
+        } catch (err) {
+            ctx.response.status = 416;
+            ctx.body = {
+                code: 416 ,
+                msg: '查找菜单失败',
+                data: err
+            }
+
+        }
 
 
     }
 
-    // 查找组件类别详情
+   
+
+    static async findAllMenu(ctx) {
+        let req = ctx.request.body;
+      
+        try {
+            let  data = await menuModel.findAllMenu(req);
+
+           
+            ctx.response.status = 200;
+            ctx.body = {
+                code: 200,
+                msg: '查找所有菜单成功',
+                data
+            }
+        } catch (err) {
+            ctx.response.status = 416;
+            ctx.body = {
+                code: 416 ,
+                msg: '查找所有菜单失败',
+                data: err
+            }
+
+        }
+
+
+    }
+
+    // 查找菜单详情
 
     static async findOne(ctx) {
         let req = ctx.request.body;
@@ -164,14 +188,14 @@ class menuController {
             ctx.response.status = 200;
             ctx.body = {
                 code: 200,
-                msg: '查找组件类别详情成功',
+                msg: '查找菜单详情成功',
                 data
             }
         } catch (err) {
             ctx.response.status = 416;
             ctx.body = {
                 code: 416 ,
-                msg: '查找组件类别详情失败',
+                msg: '查找菜单详情失败',
                 data: err
             }
 

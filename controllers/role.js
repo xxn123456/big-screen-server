@@ -3,7 +3,7 @@ const roleModel = require('../modules/role.js')
 class roleController {
 
 
-    // 创建组件类别
+    // 创建角色别
     static async create(ctx) {
 
 
@@ -16,14 +16,14 @@ class roleController {
             ctx.response.status = 200;
             ctx.body = {
                 code: 200,
-                msg: '创建组件类别成功',
+                msg: '创建角色别成功',
                 data
             }
         } catch (err) {
             ctx.response.status = 416;
             ctx.body = {
                 code: 416 ,
-                msg: '创建组件类别失败',
+                msg: '创建角色别失败',
                 data: err
             }
 
@@ -32,27 +32,25 @@ class roleController {
 
     }
 
-    // 修改组件类别
+    // 修改角色别
 
     static async update(ctx) {
         let req = ctx.request.body;
         try {
              
-            let ret = await roleModel.update(req);
+            let data = await roleModel.update(req);
            
-            let blogDetail =await roleModel.detail(req.id);
-        
             ctx.response.status = 200;
             ctx.body = {
                 code: 200,
-                msg: '修改组件类别成功',
-                data: blogDetail
+                msg: '修改角色别成功',
+                data
             }
         } catch (err) {
             ctx.response.status = 416;
             ctx.body = {
                 code: 416 ,
-                msg: '修改组件类别失败',
+                msg: '修改角色别失败',
                 data: err
             }
 
@@ -61,7 +59,7 @@ class roleController {
 
     }
 
-    // 删除组件类别
+    // 删除角色
 
     static async del(ctx) {
         let req = ctx.request.body;
@@ -72,14 +70,14 @@ class roleController {
             ctx.response.status = 200;
             ctx.body = {
                 code: 200,
-                msg: '删除组件类别成功',
+                msg: '删除角色别成功',
                 data
             }
         } catch (err) {
             ctx.response.status = 416;
             ctx.body = {
                 code: 416 ,
-                msg: '删除组件类别失败',
+                msg: '删除角色别失败',
                 data: err
             }
 
@@ -95,19 +93,19 @@ class roleController {
         let req = ctx.request.body;
         if (req.batchList) {
             try {
-                //创建组件类别模型
+                //创建角色别模型
                 const data=await roleModel.bacthDel(req.batchList);
                 ctx.response.status = 200;
                 ctx.body = {
                     code: 200,
                     articleType:data,
-                    des: '批量删除组件类别类别成功',
+                    des: '批量删除角色别类别成功',
                 }
             } catch (err) {
                 ctx.response.status = 412;
                 ctx.body = {
                     code: 412,
-                    msg: '批量删除组件类别类别失败',
+                    msg: '批量删除角色别类别失败',
                     des: err
                 }
             }
@@ -124,39 +122,27 @@ class roleController {
 
     static async findAll(ctx) {
         let req = ctx.request.body;
+        try {
+            let  data = await roleModel.findAll(req);
+            ctx.response.status = 200;
+            ctx.body = {
+                code: 200,
+                msg: '查找角色别成功',
+                data
+            }
+        } catch (err) {
+            ctx.response.status = 416;
+            ctx.body = {
+                code: 416 ,
+                msg: '查找角色别失败',
+                data: err
+            }
 
-        let  data = await roleModel.findAll(req);
-        ctx.response.status = 200;
-        ctx.body = {
-            code: 200,
-            msg: '查找组件类别成功',
-            data
         }
-
-      
-        // try {
-        //     let  data = await SroleModel.finAll(req);
-        //     ctx.response.status = 200;
-        //     ctx.body = {
-        //         code: 200,
-        //         msg: '查找组件类别成功',
-        //         data
-        //     }
-        // } catch (err) {
-        //     ctx.response.status = 416;
-        //     ctx.body = {
-        //         code: 416 ,
-        //         msg: '查找组件类别失败',
-        //         data: err
-        //     }
-
-        // }
 
 
     }
-
-    // 查找组件类别详情
-
+    // 查找角色别详情
     static async findOne(ctx) {
         let req = ctx.request.body;
         try {
@@ -164,14 +150,41 @@ class roleController {
             ctx.response.status = 200;
             ctx.body = {
                 code: 200,
-                msg: '查找组件类别详情成功',
+                msg: '查找角色别详情成功',
                 data
             }
         } catch (err) {
             ctx.response.status = 416;
             ctx.body = {
                 code: 416 ,
-                msg: '查找组件类别详情失败',
+                msg: '查找角色别详情失败',
+                data: err
+            }
+
+        }
+
+
+    }
+
+      // 查询所有角色
+
+      static async findAllRole(ctx) {
+        try {
+            let data = await roleModel.findAllRole();
+
+            console.log("查询到的--------------",data)
+           
+            ctx.response.status = 200;
+            ctx.body = {
+                code: 200,
+                msg: '查询所有成功',
+                data
+            }
+        } catch (err) {
+            ctx.response.status = 416;
+            ctx.body = {
+                code: 416 ,
+                msg: '查询所有角色失败',
                 data: err
             }
 

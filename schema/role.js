@@ -17,9 +17,15 @@ module.exports = function(sequelize, DataTypes) {
         // 角色路由
         role_router: {
             type: DataTypes.STRING,
-            allowNull: false,
             field: 'role_router'
         },
+        // 角色拥有大屏
+        role_screen: {
+            type: DataTypes.STRING,
+            field: 'role_screen'
+        },
+
+
 
         // 创建时间
         createdAt: {

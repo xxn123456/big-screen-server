@@ -5,7 +5,17 @@ const userController = require('../controllers/user');
 //密码登陆
 router.post('/login', userController.login)
 
+
 router.post('/regist', userController.create)
+
+
+router.post('/del', userController.delUser)
+
+
+router.post('/findAll', userController.findAll)
+
+
+
 
 
 

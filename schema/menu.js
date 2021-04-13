@@ -31,9 +31,8 @@ module.exports = function(sequelize, DataTypes) {
         // 上层id
         p_id: {
             type: DataTypes.INTEGER,
-            allowNull: false,
             field: 'p_id',
-            default:0
+            default: 0
         },
 
         

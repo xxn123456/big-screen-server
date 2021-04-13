@@ -22,13 +22,16 @@ module.exports = function(sequelize, DataTypes) {
             },
             avatar:{
                 type: DataTypes.STRING,
-                allowNull: false,
-                field: 'avatar'
+                field: 'avatar',
+                default:"shutiaogege.top/xxx.png"
+            },
+            role_id:{
+                type: DataTypes.INTEGER,
+                field: 'role_id'
             },
             createdAt: {
                 type: DataTypes.DATE,
                 get () {
-                    // console.log(this.getDataValue('created_time'))
                     return this.getDataValue('createdAt') ? moment(this.getDataValue('createdAt')).format('YYYY-MM-DD HH:mm:ss') : null;
                   }
             },
@@ -36,7 +39,6 @@ module.exports = function(sequelize, DataTypes) {
             updatedAt: {
                 type: DataTypes.DATE,
                 get () {
-                    // console.log(this.getDataValue('created_time'))
                     return this.getDataValue('updatedAt') ? moment(this.getDataValue('updatedAt')).format('YYYY-MM-DD HH:mm:ss') : null;
                   }
             }

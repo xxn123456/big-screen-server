@@ -5,9 +5,14 @@ const menuController= require('../controllers/menu.js');
 // 创建文章类别
 
 router.post('/create', menuController.create)
+
+
 router.post('/findAll', menuController.findAll)
 
-router.post('/updata', menuController.update)
+
+router.get('/findAllMenu', menuController.findAllMenu)
+
+router.post('/update', menuController.update)
 
 router.post('/del', menuController.del)
 
