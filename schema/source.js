@@ -13,6 +13,11 @@ module.exports = function(sequelize, DataTypes) {
             allowNull: false,
             field: 'title'
         },
+        source_type_id: {
+            type: DataTypes.INTEGER,
+            allowNull: false,
+            field: 'source_type_id'
+        },
         // 数据库用户名
         sql_user: {
             type: DataTypes.STRING,

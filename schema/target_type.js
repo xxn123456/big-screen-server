@@ -1,38 +1,17 @@
 const moment = require("moment");
 module.exports = function(sequelize, DataTypes) {
-    const Target_mysql = sequelize.define('target_mysql', {
+    const Target_type = sequelize.define('target_type', {
         id: {
             type: DataTypes.INTEGER,
             primaryKey: true,
             allowNull: true,
             autoIncrement: true
         },
-        //指标名称
+        //指标类别名称
         title: {
             type: DataTypes.STRING,
             allowNull: false,
             field: 'title'
-        },
-        target_type_id: {
-            type: DataTypes.INTEGER,
-            field: 'target_type'
-        },
-        // 数据源id
-        source_id: {
-            type: DataTypes.INTEGER,
-            allowNull: false,
-            field: 'source_id'
-        },
-        // sql语句
-        sql_order: {
-            type: DataTypes.STRING,
-            allowNull: false,
-            field: 'sql_order'
-        },
-        // 指标内容
-        content: {
-            type: DataTypes.STRING,
-            field: 'content'
         },
         // 创建时间
         createdAt: {
@@ -59,6 +38,6 @@ module.exports = function(sequelize, DataTypes) {
         freezeTableName: true
     });
 
-    return Target_mysql
+    return Target_type
 
 }

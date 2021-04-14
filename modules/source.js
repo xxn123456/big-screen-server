@@ -1,3 +1,8 @@
+
+
+
+
+
 // 引入mysql的配置文件
 const db = require('../config/db');
 
@@ -7,11 +12,17 @@ const {
     Op
 } = require("sequelize");
 
-// 引入数据表模型
-const Source = Sequelize.import('../schema/source_mysql.js');
+
+const Source = Sequelize.import('../schema/source.js');
+
+const Source_type = Sequelize.import('../schema/source_type.js');
+
+Source.belongsTo(Source_type,{foreignKey:'source_type_id'});
+
 Source.sync({
     force: false
 }); //自动创建表
+
 
 class SourceModel {
     /**
@@ -23,6 +34,7 @@ class SourceModel {
     static async create(data) {
         return await Source.create({
             title:data.title,
+            source_type_id:data.source_type_id,
             sql_user:data.sql_user,
             sql_pass:data.sql_pass,
             host:data.host,
@@ -35,6 +47,7 @@ class SourceModel {
     static async update(data) {
         return await Source.update({
             title:data.title,
+            source_type_id:data.source_type_id,
             sql_user:data.sql_user,
             sql_pass:data.sql_pass,
             host:data.host,
@@ -55,19 +68,7 @@ class SourceModel {
             }
         });
     }
-    // // 对文章批量删除
-    // static async bacthDel(data) {
-    //             return await ArticleType.destroy({
-    //                 where: {
-    //                     id: data
-    //                 }
-    //             })
-    //         }
-    // /**
-    //  * 查询文章的详情
-    //  * @param id 文章ID
-    //  * @returns {Promise<Model>}
-    //  */
+  
     static async getDetail(id) {
         return await Source.findOne({
             where: {
@@ -91,11 +92,14 @@ class SourceModel {
             criteria.push({host:data.host})
            
         }
-        return await ArticleType.findAndCountAll({
+        return await Source.findAndCountAll({
             where: {
                 [Op.and]:criteria
         
             },
+            include: [{   
+                                 model: Source_type
+                            }],
             //offet去掉前多少个数据
             offset,
             //limit每页数据数量
@@ -110,4 +114,4 @@ class SourceModel {
 
 }
 
-module.exports = SourceModel;
+module.exports =SourceModel;

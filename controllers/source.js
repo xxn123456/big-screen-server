@@ -1,4 +1,4 @@
-const mysqlModel = require('../modules/source_mysql.js')
+const mysqlModel = require('../modules/source.js')
 
 class mysqlController {
 
@@ -39,15 +39,14 @@ class mysqlController {
         let req = ctx.request.body;
         try {
              
-            let ret = await mysqlModel.update(req);
-           
-            let blogDetail =await mysqlModel.detail(req.id);
+            let data = await mysqlModel.update(req);
+         
         
             ctx.response.status = 200;
             ctx.body = {
                 code: 200,
                 msg: '修改数据源成功',
-                data: blogDetail
+                data
             }
         } catch (err) {
             ctx.response.status = 416;

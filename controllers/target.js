@@ -1,4 +1,5 @@
-const targetModel = require('../modules/target.js')
+const targetModel = require('../modules/target.js');
+
 
 class targetController {
 
@@ -98,20 +99,18 @@ class targetController {
 
     // 创建指标
     static async create(ctx) {
-
-
         let req = ctx.request.body;
-
-
         try {
 
-            const data = await targetModel.create(req);
+            let data = await targetModel.create(req);
+
+            let msg = await targetModel.getDetail(data.id);
 
             ctx.response.status = 200;
             ctx.body = {
                 code: 200,
                 msg: '创建指标成功',
-                data
+                msg
             }
         } catch (err) {
             ctx.response.status = 416;
@@ -220,6 +219,10 @@ class targetController {
         let req = ctx.request.body;
 
         let data = await targetModel.findAll(req);
+
+    
+
+
         ctx.response.status = 200;
         ctx.body = {
             code: 200,

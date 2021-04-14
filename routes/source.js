@@ -1,6 +1,6 @@
 const Router = require('koa-router');
-const router = new Router({prefix: '/mysqlsource'});
-const sourceController = require('../controllers/source_mysql.js');
+const router = new Router({prefix: '/source'});
+const sourceController = require('../controllers/source.js');
 
 //密码登陆
 router.post('/create', sourceController.create)
