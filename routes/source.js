@@ -8,6 +8,8 @@ router.post('/create', sourceController.create)
 router.post('/findAll', sourceController.findAll)
 
 
+router.get('/findSourceAndType', sourceController.findSourceAndType)
+
 router.post('/update', sourceController.update)
 
 router.post('/del', sourceController.del)

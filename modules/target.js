@@ -1,12 +1,11 @@
 // 引入mysql的配置文件
 const db = require('../config/db');
 
-const {
-    Source_conect
-} = require("../util/mysql_conect.js")
+
 
 // 引入sequelize对象
 const Sequelize = db.sequelize;
+
 const {
     Op
 } = require("sequelize");
@@ -15,6 +14,7 @@ const {
 const Target = Sequelize.import('../schema/target.js');
 
 
+// 指标类型
 const Target_type = Sequelize.import('../schema/target_type.js');
 
 
@@ -22,11 +22,26 @@ Target.belongsTo(Target_type, {
     foreignKey: 'target_type_id'
 });
 
+
+// 数据源
 const Source = Sequelize.import('../schema/source.js');
 
 Target.belongsTo(Source, {
     foreignKey: 'source_id'
 });
+
+// 数据源类型
+
+
+const Source_type = Sequelize.import('../schema/source_type.js');
+
+Target.belongsTo(Source_type, {
+    foreignKey: 'source_type_id'
+});
+
+
+
+
 
 
 
@@ -50,75 +65,15 @@ class TargetModel {
 
     // 获取数据库表结构
 
-    static async query_table(data) {
-
-        let opt = {
-            host: 'localhost',
-            port: 3306,
-            user: 'root',
-            password: 'yjh123456',
-            database: 'koa_error',
-            useConnectionPooling: true,
-        };
-        let source_conect = new Source_conect(opt);
-        let sql = `select * from information_schema.columns
-        where table_name = 'user';`;
-
-        return await source_conect.Query(sql);
-
-    }
-
-
-
-    // 获取指标
-
-    static async query_mysql(data) {
-
-        let opt = {
-            host: 'localhost',
-            port: 3306,
-            user: 'root',
-            password: 'yjh123456',
-            database: 'koa_error',
-            useConnectionPooling: true,
-        };
-        let source_conect = new Source_conect(opt);
-        let sql = `select * from user;`;
-
-        return await source_conect.Query(sql);
-
-    }
-
-
-    // 数据库连接测试
-    static async conect_mysql(data) {
-        let opt = {
-            host: 'localhost',
-            port: 3306,
-            user: 'root',
-            password: 'yjh123456',
-            database: 'koa_error',
-            useConnectionPooling: true,
-        };
-        let source_conect = new Source_conect(opt);
-
-
-        return await source_conect.test();
-
-
-    }
-
-
-
 
     // 创建文章类别
     static async create(data) {
-
-
+        console.log("开始创建-----------")
         return await Target.create({
-            title: data.title,
-            target_type_id: data.target_type_id,
+            title:data.title,
+            target_type_id:data.target_type_id,
             source_id: data.source_id,
+            source_type_id:data.source_type_id,
             sql_order: data.sql_order,
             content: data.content
         });
@@ -130,6 +85,7 @@ class TargetModel {
             title: data.title,
             target_type_id: data.target_type_id,
             source_id: data.source_id,
+            source_type_id:data.source_type_id,
             sql_order: data.sql_order,
             content: data.content
 
@@ -171,6 +127,9 @@ class TargetModel {
                 },
                 {
                     model: Source
+                },
+                {
+                     model: Source_type
                 }
                 
             ],
@@ -207,7 +166,10 @@ class TargetModel {
                 },
                 {
                     model: Source
-                }
+                },
+                {
+                    model: Source_type
+               }
                 
             ],
             //offet去掉前多少个数据

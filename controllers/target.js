@@ -3,103 +3,12 @@ const targetModel = require('../modules/target.js');
 
 class targetController {
 
-     // 查询表结构
-     static async query_table(ctx) {
 
-
-        let req = ctx.request.body;
-
-
-        try {
-
-            const data = await targetModel.query_table(req);
-
-            ctx.response.status = 200;
-            ctx.body = {
-                code: 200,
-                msg: '查询表结构成功',
-                data
-            }
-        } catch (err) {
-            ctx.response.status = 416;
-            ctx.body = {
-                code: 416,
-                msg: '查询失败',
-                data: err
-            }
-
-        }
-
-    }
-
-    // 查询指标
-
-    static async query_mysql(ctx) {
-
-
-        let req = ctx.request.body;
-
-
-        try {
-
-            const data = await targetModel.query_mysql(req);
-
-            ctx.response.status = 200;
-            ctx.body = {
-                code: 200,
-                msg: '数据库查询指标成功',
-                data
-            }
-        } catch (err) {
-            ctx.response.status = 416;
-            ctx.body = {
-                code: 416,
-                msg: '数据库查询指标失败',
-                data: err
-            }
-
-        }
-
-
-    }
-
-
-    static async conect_mysql(ctx) {
-
-
-        let req = ctx.request.body;
-
-
-        try {
-
-            const data = await targetModel.conect_mysql(req);
-
-            ctx.response.status = 200;
-            ctx.body = {
-                code: 200,
-                msg: '数据库连接成功',
-                data
-            }
-        } catch (err) {
-            ctx.response.status = 416;
-            ctx.body = {
-                code: 416,
-                msg: '数据库连接失败',
-                data: err
-            }
-
-        }
-
-
-    }
-
-
-
-    
 
     // 创建指标
     static async create(ctx) {
         let req = ctx.request.body;
+
         try {
 
             let data = await targetModel.create(req);
@@ -218,36 +127,26 @@ class targetController {
     static async findAll(ctx) {
         let req = ctx.request.body;
 
-        let data = await targetModel.findAll(req);
-
     
 
 
-        ctx.response.status = 200;
-        ctx.body = {
-            code: 200,
-            msg: '查找指标成功',
-            data
+        try {
+            let  data = await targetModel.findAll(req);
+            ctx.response.status = 200;
+            ctx.body = {
+                code: 200,
+                msg: '查找指标成功',
+                data
+            }
+        } catch (err) {
+            ctx.response.status = 416;
+            ctx.body = {
+                code: 416 ,
+                msg: '查找指标失败',
+                data: err
+            }
+
         }
-
-
-        // try {
-        //     let  data = await targetModel.finAll(req);
-        //     ctx.response.status = 200;
-        //     ctx.body = {
-        //         code: 200,
-        //         msg: '查找指标成功',
-        //         data
-        //     }
-        // } catch (err) {
-        //     ctx.response.status = 416;
-        //     ctx.body = {
-        //         code: 416 ,
-        //         msg: '查找指标失败',
-        //         data: err
-        //     }
-
-        // }
 
 
     }

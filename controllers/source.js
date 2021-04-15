@@ -9,11 +9,7 @@ class mysqlController {
 
         let req = ctx.request.body;
         try {
-            console.log("进入构造函数控制层");
-            const data = await mysqlModel.create(req);
-
-            console.log("进入构造函数控制层",data);
-        
+            const data = await mysqlModel.create(req);    
             ctx.response.status = 200;
             ctx.body = {
                 code: 200,
@@ -125,32 +121,50 @@ class mysqlController {
     static async findAll(ctx) {
         let req = ctx.request.body;
 
-        let  data = await mysqlModel.findAll(req);
-        ctx.response.status = 200;
-        ctx.body = {
-            code: 200,
-            msg: '查找数据源成功',
-            data
+       
+      
+        try {
+            let  data = await mysqlModel.findAll(req);
+            ctx.response.status = 200;
+            ctx.body = {
+                code: 200,
+                msg: '查找数据源成功',
+                data
+            }
+        } catch (err) {
+            ctx.response.status = 416;
+            ctx.body = {
+                code: 416 ,
+                msg: '查找数据源失败',
+                data: err
+            }
+
         }
 
-      
-        // try {
-        //     let  data = await mysqlModel.finAll(req);
-        //     ctx.response.status = 200;
-        //     ctx.body = {
-        //         code: 200,
-        //         msg: '查找数据源成功',
-        //         data
-        //     }
-        // } catch (err) {
-        //     ctx.response.status = 416;
-        //     ctx.body = {
-        //         code: 416 ,
-        //         msg: '查找数据源失败',
-        //         data: err
-        //     }
 
-        // }
+    }
+
+    
+
+    static async findSourceAndType(ctx) {
+       
+        try {
+            let  data = await mysqlModel.findSourceAndType();
+            ctx.response.status = 200;
+            ctx.body = {
+                code: 200,
+                msg: '查找数据源和类别成功',
+                data
+            }
+        } catch (err) {
+            ctx.response.status = 416;
+            ctx.body = {
+                code: 416 ,
+                msg: '查找数据源和类别失败',
+                data: err
+            }
+
+        }
 
 
     }
