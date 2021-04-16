@@ -1,5 +1,9 @@
 const mysqlModel = require('../modules/BaseSql/source_mysql.js');
 
+const Source = require('../modules/source.js')
+
+
+
 class sqlController {
     // 查询表结构
     static async query_table(ctx) {
@@ -37,10 +41,21 @@ class sqlController {
 
         let req = ctx.request.body;
 
+        let source = await Source.getDetail(req.source_config);
 
+        let opt = {
+            host: source.host,
+            port: source.port,
+            user: source.sql_user,
+            password: source.sql_pass,
+            database: source.title,
+            time_zone:source.time_zone,
+            useConnectionPooling: true,
+        };
+        let sql = req.sql_order;
         try {
 
-            const data = await mysqlModel.query_mysql(req);
+            const data = await mysqlModel.query_mysql(opt,sql);
 
             ctx.response.status = 200;
             ctx.body = {

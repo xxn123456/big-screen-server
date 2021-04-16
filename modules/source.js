@@ -12,11 +12,18 @@ const Source = Sequelize.import('../schema/source.js');
 
 const Source_type = Sequelize.import('../schema/source_type.js');
 
+
+
 Source.hasMany(Source_type, {
     foreignKey: 'id',
     sourceKey: 'source_type_id',
     as:'children'
 });
+
+Source.belongsTo(Source_type, {
+    foreignKey: 'source_type_id'
+});
+
 
 const Users = Sequelize.import('../schema/users.js'); 
 
@@ -106,9 +113,7 @@ class SourceModel {
     }
     // // 对文章类别进行搜索分页显示
     static async findAll(data) {
-        Source.belongsTo(Source_type, {
-            foreignKey: 'source_type_id'
-        });
+     
         let offset = data.pageSize * (data.currentPage - 1);
         let limit = parseInt(data.pageSize);
 
@@ -148,26 +153,16 @@ class SourceModel {
     }
 
     static async findSourceAndType(data) {
-        return await Class.findAll({
-            include: [{
-                model: Users,
-                as:'children',
-                include: [{
-                    model: Foods,
-                    as:'children'
-                }]
-                
-            }]
-        })
+      
     
-        // return await Source.findAll({
-        //     attributes: [['id','value'],['title','label']],
-        //     include: [{
-        //         model: Source_type,
-        //         attributes: [['id','value'],['catename','label']],
-        //         as:'children'
-        //     }],
-        // });
+        return await Source.findAll({
+            attributes: [['id','value'],['title','label']],
+            include: [{
+                model: Source_type,
+                attributes: [['id','value'],['catename','label']],
+                as:'children'
+            }],
+        });
     }
 
 
