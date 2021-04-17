@@ -16,13 +16,11 @@ module.exports = function(sequelize, DataTypes) {
         // 大屏封面
         conver: {
             type: DataTypes.STRING,
-            allowNull: false,
             field: 'conver'
         },
         // 大屏布局
         layout: {
             type: DataTypes.STRING,
-            allowNull: false,
             field: 'layout'
         },
 

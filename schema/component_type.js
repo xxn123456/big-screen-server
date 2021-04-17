@@ -16,7 +16,6 @@ module.exports = function(sequelize, DataTypes) {
         // 类别创建人
         user_id: {
             type: DataTypes.STRING,
-            allowNull: false,
             field: 'user_id'
         },
         // 创建时间

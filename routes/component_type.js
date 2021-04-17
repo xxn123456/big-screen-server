@@ -12,10 +12,13 @@ componentTypeController= require('../controllers/component_type.js');
 router.post('/create', componentTypeController.create)
 router.post('/findAll', componentTypeController.findAll)
 
-router.post('/updata', componentTypeController.update)
+router.post('/update', componentTypeController.update)
 
 router.post('/del', componentTypeController.del)
 
 router.post('/batchDel', componentTypeController.batchDel)
+
+
+router.get('/findAllComponentType', componentTypeController.findAllComponentType)
 
 module.exports = router

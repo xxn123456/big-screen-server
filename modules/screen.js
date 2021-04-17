@@ -13,6 +13,11 @@ Screen.sync({
     force: false
 }); //自动创建表
 
+
+const User = Sequelize.import('../schema/user');
+
+Screen.belongsTo(User,{foreignKey:'user_id'});
+
 class ScreenModel {
     /**
      * 创建文章模型
@@ -22,15 +27,19 @@ class ScreenModel {
     // 创建文章类别
     static async create(data) {
         return await Screen.create({
-            categoryName: data.categoryName, //标题
-            categoryCreater: data.categoryCreater
+            title: data.title, //标题
+            conver:data.conver,
+            layout:data.layout,
+            user_id:data.user_id
         });
     }
     // 更新文章类别
-    static async upDate(data) {
+    static async update(data) {
         return await Screen.update({
-            categoryName: data.categoryName, //标题
-            categoryCreater: data.categoryCreater
+            title: data.title, //标题
+            conver:data.conver,
+            layout:data.layout,
+            user_id:data.user_id
         }, {
             where: {
                 id: data.id
@@ -66,17 +75,23 @@ class ScreenModel {
             }
         });
     }
+
+    static async findAllScreen(data) {
+        return await Screen.findAll({
+            attributes: [['id','value'],['title','label']],
+        });
+        
+    }
     // 对文章类别进行搜索分页显示
-    static async finAll(data) {
+    static async findAll(data) {
         let offset = data.pageSize * (data.currentPage - 1);
         let limit = parseInt(data.pageSize);
 
         let criteria = [];
-
-        if(data.categoryName){
-            criteria.push({categoryName:data.categoryName})
-           
+        if(data.name){
+            criteria.push({name:data.name}); 
         }
+
         if(data.startTime||data.endTime){
             criteria.push({
                             
@@ -94,6 +109,10 @@ class ScreenModel {
                 [Op.and]:criteria
             
             },
+            include: [{   
+                                 model: User,
+                                 attributes: { exclude: ['password'] }
+                            }],
             //offet去掉前多少个数据
             offset,
             //limit每页数据数量

@@ -39,15 +39,15 @@ class componentTypeController {
         let req = ctx.request.body;
         try {
              
-            let ret = await componentTypeModel.update(req);
+            let data = await componentTypeModel.update(req);
            
-            let blogDetail =await componentTypeModel.detail(req.id);
+           
         
             ctx.response.status = 200;
             ctx.body = {
                 code: 200,
                 msg: '修改组件类别成功',
-                data: blogDetail
+                data
             }
         } catch (err) {
             ctx.response.status = 416;
@@ -126,32 +126,55 @@ class componentTypeController {
     static async findAll(ctx) {
         let req = ctx.request.body;
 
-        let  data = await componentTypeModel.findAll(req);
-        ctx.response.status = 200;
-        ctx.body = {
-            code: 200,
-            msg: '查找组件类别成功',
-            data
-        }
+      
 
       
-        // try {
-        //     let  data = await componentTypeModel.finAll(req);
-        //     ctx.response.status = 200;
-        //     ctx.body = {
-        //         code: 200,
-        //         msg: '查找组件类别成功',
-        //         data
-        //     }
-        // } catch (err) {
-        //     ctx.response.status = 416;
-        //     ctx.body = {
-        //         code: 416 ,
-        //         msg: '查找组件类别失败',
-        //         data: err
-        //     }
+        try {
+            let  data = await componentTypeModel.findAll(req);
+            ctx.response.status = 200;
+            ctx.body = {
+                code: 200,
+                msg: '查找组件类别成功',
+                data
+            }
+        } catch (err) {
+            ctx.response.status = 416;
+            ctx.body = {
+                code: 416 ,
+                msg: '查找组件类别失败',
+                data: err
+            }
 
-        // }
+        }
+
+
+    }
+
+  
+
+    static async findAllComponentType(ctx) {
+        let req = ctx.request.body;
+
+      
+
+      
+        try {
+            let  data = await componentTypeModel.findAllComponentType(req);
+            ctx.response.status = 200;
+            ctx.body = {
+                code: 200,
+                msg: '查找组件类别成功',
+                data
+            }
+        } catch (err) {
+            ctx.response.status = 416;
+            ctx.body = {
+                code: 416 ,
+                msg: '查找组件类别失败',
+                data: err
+            }
+
+        }
 
 
     }

@@ -32,11 +32,7 @@ const Foods = Sequelize.import('../schema/foods.js');
 const Class = Sequelize.import('../schema/class.js');
 
 
-Class.hasOne(Users, {
-    foreignKey: 'id',
-    sourceKey: 'user_id',
-    as:'children'
-});
+
 
 
 Users.hasMany(Foods, {

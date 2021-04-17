@@ -8,16 +8,16 @@ module.exports = function(sequelize, DataTypes) {
             autoIncrement: true
         },
         //组件名称
-        component_name: {
+        name: {
             type: DataTypes.STRING,
             allowNull: false,
-            field: 'component_name'
+            field: 'name'
         },
         // 组件类别
-        component_type: {
+        component_type_id: {
             type: DataTypes.INTEGER,
             allowNull: false,
-            field: 'component_type'
+            field: 'component_type_id'
         },
         // 组件图片
         component_pic: {
@@ -26,16 +26,10 @@ module.exports = function(sequelize, DataTypes) {
             field: 'component_pic'
         },
         // 组件别名
-        component_other_name: {
+        other_name: {
             type: DataTypes.STRING,
             allowNull: false,
-            field: 'component_other_name'
-        },
-        // 组件配置项
-        component_option: {
-            type: DataTypes.STRING,
-            allowNull: false,
-            field: 'component_option'
+            field: 'other_name'
         },
         // 创建时间
         createdAt: {

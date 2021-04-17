@@ -9,6 +9,16 @@ const {
 
 // 引入数据表模型
 const Component_type = Sequelize.import('../schema/component_type.js');
+
+
+const User = Sequelize.import('../schema/user');
+
+
+Component_type.belongsTo(User,{foreignKey:'user_id'});
+
+
+
+
 Component_type.sync({
     force: false
 }); //自动创建表
@@ -23,14 +33,14 @@ class ComponentTypeModel {
     static async create(data) {
         return await Component_type.create({
             categoryName: data.categoryName, //标题
-            categoryCreater: data.categoryCreater
+            user_id: data.user_id
         });
     }
     // 更新文章类别
-    static async upDate(data) {
+    static async update(data) {
         return await Component_type.update({
             categoryName: data.categoryName, //标题
-            categoryCreater: data.categoryCreater
+            user_id: data.user_id
         }, {
             where: {
                 id: data.id
@@ -66,8 +76,14 @@ class ComponentTypeModel {
             }
         });
     }
+
+    static async findAllComponentType(data){
+        return await Component_type.findAll({});
+
+        
+    }
     // 对文章类别进行搜索分页显示
-    static async finAll(data) {
+    static async findAll(data) {
         let offset = data.pageSize * (data.currentPage - 1);
         let limit = parseInt(data.pageSize);
 
@@ -94,6 +110,10 @@ class ComponentTypeModel {
                 [Op.and]:criteria
             
             },
+            include: [{   
+                                 model: User,
+                                attributes: { exclude: ['password'] }
+                            }],
             //offet去掉前多少个数据
             offset,
             //limit每页数据数量

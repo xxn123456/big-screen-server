@@ -92,7 +92,9 @@ class MenuModel {
 
     static async findAllMenu(data) {
     
-        return await Menu.findAll({})
+        return await Menu.findAll({
+            attributes: [['id','value'],['name','label'],'p_id'],
+        })
         
 
 

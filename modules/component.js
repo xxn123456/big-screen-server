@@ -9,6 +9,26 @@ const {
 
 // 引入数据表模型
 const Component = Sequelize.import('../schema/Component.js');
+
+const Component_type = Sequelize.import('../schema/component_type.js');
+
+Component_type.hasMany(Component, {
+    foreignKey: 'component_type_id',
+    sourceKey: 'id',
+    as:'children'
+});
+// Component.hasOne(Component_type, {
+//     foreignKey: 'id',
+//     sourceKey: 'component_type_id',
+//     as:'children'
+// });
+
+Component.belongsTo(Component_type, {
+    foreignKey: 'component_type_id'
+});
+
+
+
 Component.sync({
     force: false
 }); //自动创建表
@@ -22,15 +42,20 @@ class ComponentModel {
     // 创建文章类别
     static async create(data) {
         return await Component.create({
-            categoryName: data.categoryName, //标题
-            categoryCreater: data.categoryCreater
+            name: data.name, //标题
+            other_name:data.other_name,
+            component_type_id: data.component_type_id,
+            component_pic:data.component_pic,
+
         });
     }
     // 更新文章类别
-    static async upDate(data) {
+    static async update(data) {
         return await Component.update({
-            categoryName: data.categoryName, //标题
-            categoryCreater: data.categoryCreater
+            name: data.name, //标题
+            other_name:data.other_name,
+            component_type_id: data.component_type_id,
+            component_pic:data.component_pic,
         }, {
             where: {
                 id: data.id
@@ -66,15 +91,28 @@ class ComponentModel {
             }
         });
     }
+
+    static async findComponentAndType(data) {
+        return await Component_type.findAll({
+            attributes: [['id','value'],['categoryName','label']],
+            include: [{
+                model: Component,
+                attributes: [['id','value'],['name','label']],
+                as:'children'
+            }]
+          
+        });
+    
+    }
     // 对文章类别进行搜索分页显示
-    static async finAll(data) {
+    static async findAll(data) {
         let offset = data.pageSize * (data.currentPage - 1);
         let limit = parseInt(data.pageSize);
 
         let criteria = [];
 
-        if(data.categoryName){
-            criteria.push({categoryName:data.categoryName})
+        if(data.name){
+            criteria.push({name:data.name})
            
         }
         if(data.startTime||data.endTime){
@@ -94,6 +132,9 @@ class ComponentModel {
                 [Op.and]:criteria
             
             },
+            include: [{
+                model: Component_type
+            }],
             //offet去掉前多少个数据
             offset,
             //limit每页数据数量
@@ -101,9 +142,6 @@ class ComponentModel {
 
         })
         
-
-   
-
     }
 
 }
