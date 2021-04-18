@@ -150,6 +150,39 @@ class componentController {
 
     }
 
+   
+
+    static async findComponentByType(ctx) {
+        let req = ctx.request.body;
+
+        let  data = await componentModel.findComponentByType(req);
+        ctx.response.status = 200;
+        ctx.body = {
+            code: 200,
+            msg: '根据组件类型查询组件成功',
+            data
+        }
+        // try {
+        //     let  data = await componentModel.findComponentByType(req);
+        //     ctx.response.status = 200;
+        //     ctx.body = {
+        //         code: 200,
+        //         msg: '根据组件类型查询组件成功',
+        //         data
+        //     }
+        // } catch (err) {
+        //     ctx.response.status = 416;
+        //     ctx.body = {
+        //         code: 416 ,
+        //         msg: '根据组件类型查询组件失败',
+        //         data: err
+        //     }
+
+        // }
+
+
+    }
+
 
 
 

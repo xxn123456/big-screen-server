@@ -36,12 +36,15 @@ router.post('/batchDel', componentController.batchDel)
 
 router.get('/findComponentAndType', componentController.findComponentAndType)
 
+router.post('/findComponentByType', componentController.findComponentByType)
+
+
 router.post('/upload', upload.single('file'), async (ctx, next) => {
     try {
         ctx.response.status = 200;
         ctx.body = {
             code: 200,
-            url: '/images/img/component/' + ctx.req.file.filename,
+            url: '/img/component/' + ctx.req.file.filename,
             des: "文章图片上传成功"
         }
     } catch (err) {

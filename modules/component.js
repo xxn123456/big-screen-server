@@ -94,6 +94,15 @@ class ComponentModel {
         });
     }
 
+    static async findComponentByType(data) {
+        return await Component.findAll({
+            where: {
+                component_type_id:data.id
+            }
+        });
+    
+    }
+
     static async findComponentAndType(data) {
         return await Component_type.findAll({
             attributes: [['id','value'],['categoryName','label']],
