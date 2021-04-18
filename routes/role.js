@@ -9,6 +9,9 @@ router.post('/findAll', roleController.findAll)
 
 router.get('/findAllRole',roleController.findAllRole)
 
+router.post('/findMenuByRole',roleController.findMenuByRole)
+
+
 router.post('/update', roleController.update)
 
 router.post('/del', roleController.del)

@@ -25,6 +25,11 @@ module.exports = function(sequelize, DataTypes) {
             allowNull: false,
             field: 'component_pic'
         },
+
+        option: {
+            type: DataTypes.TEXT,
+            field: 'option'
+        },
         // 组件别名
         other_name: {
             type: DataTypes.STRING,

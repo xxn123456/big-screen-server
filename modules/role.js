@@ -10,6 +10,10 @@ const {
 // 引入数据表模型
 const Role = Sequelize.import('../schema/role.js');
 
+const Menu = Sequelize.import('../schema/menu.js');
+
+
+
 
 Role.sync({
     force: false
@@ -69,6 +73,24 @@ class RoleModel {
                 id
             }
         });
+    }
+
+    static async findRoleMenu(data) {
+        return await Role.findAll({
+            where:{
+                id:data.id
+            }
+      });
+    }
+
+    static async findMenuByRole(menuIds) {
+        let criteria = [];
+        if(menuIds){
+            criteria['id']=menuIds
+        }
+        return await Menu.findAll({
+           where: criteria
+        })
     }
     // 对文章类别进行搜索分页显示
     static async findAll(data) {

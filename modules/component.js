@@ -46,6 +46,7 @@ class ComponentModel {
             other_name:data.other_name,
             component_type_id: data.component_type_id,
             component_pic:data.component_pic,
+            option:data.option
 
         });
     }
@@ -56,6 +57,7 @@ class ComponentModel {
             other_name:data.other_name,
             component_type_id: data.component_type_id,
             component_pic:data.component_pic,
+            option:data.option
         }, {
             where: {
                 id: data.id

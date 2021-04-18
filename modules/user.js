@@ -9,6 +9,7 @@ const user = Sequelize.import('../schema/user');
 
 const Role = Sequelize.import('../schema/role.js');
 
+
 user.belongsTo(Role,{foreignKey:'role_id'});
 
 
