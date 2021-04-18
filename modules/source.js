@@ -25,34 +25,7 @@ Source.belongsTo(Source_type, {
 });
 
 
-const Users = Sequelize.import('../schema/users.js'); 
 
-const Foods = Sequelize.import('../schema/foods.js');
-
-const Class = Sequelize.import('../schema/class.js');
-
-
-
-
-
-Users.hasMany(Foods, {
-    foreignKey: 'id',
-    sourceKey: 'food_id',
-    as:'children'
-});
-
-
-
-Users.sync({
-    force: false
-}); //自动创建表
-
-Foods.sync({
-    force: false
-}); //自动创建表
-Class.sync({
-    force: false
-}); //自动创建表
 
 
 class SourceModel {
