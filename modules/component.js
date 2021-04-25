@@ -97,8 +97,12 @@ class ComponentModel {
     static async findComponentByType(data) {
         return await Component.findAll({
             where: {
-                component_type_id:data.id
-            }
+                component_type_id:data.id,
+               
+            },
+            include: [{
+                model: Component_type
+            }]
         });
     
     }
