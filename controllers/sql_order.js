@@ -57,6 +57,8 @@ class sqlController {
 
             const data = await mysqlModel.query_mysql(opt,sql);
 
+            console.log("查询出来的结果",data)
+
             ctx.response.status = 200;
             ctx.body = {
                 code: 200,

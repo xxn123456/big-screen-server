@@ -193,5 +193,37 @@ class Target_typeController {
 
     }
 
+
+    static async findTypeAndTarget(ctx) {
+
+        let  data = await Target_typeModel.findTypeAndTarget();
+        ctx.response.status = 200;
+        ctx.body = {
+            code: 200,
+            msg: '查找数据源分类详情成功',
+            data
+        }
+        // let req = ctx.request.body;
+        // try {
+        //     let  data = await Target_typeModel.findTypeAndTarget();
+        //     ctx.response.status = 200;
+        //     ctx.body = {
+        //         code: 200,
+        //         msg: '查找数据源分类详情成功',
+        //         data
+        //     }
+        // } catch (err) {
+        //     ctx.response.status = 416;
+        //     ctx.body = {
+        //         code: 416 ,
+        //         msg: '查找数据源分类详情失败',
+        //         data: err
+        //     }
+
+        // }
+
+
+    }
+
 }
 module.exports = Target_typeController

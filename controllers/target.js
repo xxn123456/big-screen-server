@@ -40,15 +40,15 @@ class targetController {
         let req = ctx.request.body;
         try {
 
-            let ret = await targetModel.update(req);
+            let data = await targetModel.update(req);
 
-            let blogDetail = await targetModel.detail(req.id);
+        
 
             ctx.response.status = 200;
             ctx.body = {
                 code: 200,
                 msg: '修改指标成功',
-                data: blogDetail
+                data
             }
         } catch (err) {
             ctx.response.status = 416;
@@ -156,7 +156,7 @@ class targetController {
     static async findOne(ctx) {
         let req = ctx.request.body;
         try {
-            let data = await targetModel.detail(req.id);
+            let data = await targetModel.getDetail(req.id);
             ctx.response.status = 200;
             ctx.body = {
                 code: 200,

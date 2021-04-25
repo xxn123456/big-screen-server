@@ -30,16 +30,18 @@ class source_mysqlModel {
       
 
 
-        // let opt = {
+        // let opt1 = {
         //     host: 'localhost',
         //     port: 3306,
         //     user: 'root',
         //     password: 'yjh123456',
-        //     database: 'koa_error',
+        //     database: 'big-screen',
         //     useConnectionPooling: true,
         // };
 
-        // let sql = `select * from user;`;
+        // let sql1 = `select * from user;`;
+
+        console.log("数据源配置项",opt);
 
         
         let source_conect = new Source_conect(opt);

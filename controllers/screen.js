@@ -180,7 +180,7 @@ class screenController {
     static async findOne(ctx) {
         let req = ctx.request.body;
         try {
-            let  data = await screenModel.detail(req.id);
+            let  data = await screenModel.getDetail(req.id);
             ctx.response.status = 200;
             ctx.body = {
                 code: 200,

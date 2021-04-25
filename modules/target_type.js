@@ -10,6 +10,19 @@ const {
 // 引入数据表模型
 // 引入数据表模型
 const Target_type = Sequelize.import('../schema/target_type.js');
+
+const Target = Sequelize.import('../schema/target.js');
+
+
+
+Target_type.hasMany(Target, {
+    foreignKey: 'target_type_id',
+    sourceKey: 'id',
+    as:'children'
+
+});
+
+
 Target_type.sync({
     force: false
 }); //自动创建表
@@ -35,6 +48,7 @@ class Target_typeModel {
             
         }, {
             where: {
+                
                 id: data.id
             }
         });
@@ -89,6 +103,22 @@ class Target_typeModel {
     
     }
 
+
+    // 查找所有指标类型跟指标
+
+
+    static async findTypeAndTarget(data) {
+    
+        return await Target_type.findAll({
+            attributes: [['id','value'],['title','label']],
+            include: [{
+                model: Target,
+                attributes: [['id','value'],['title','label'],'content'],
+                as:'children'
+            }]
+        })
+    
+    }
 }
 
 module.exports = Target_typeModel;

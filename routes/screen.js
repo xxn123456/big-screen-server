@@ -26,7 +26,7 @@ var upload = multer({
 
 router.post('/create', screenController.create)
 router.post('/findAll', screenController.findAll)
-
+router.post('/findOne', screenController.findOne)
 router.get('/findAllScreen', screenController.findAllScreen)
 
 router.post('/update', screenController.update)

@@ -8,6 +8,8 @@ router.post('/create', targetController.create)
 router.post('/findAll', targetController.findAll)
 
 
+router.post('/findOne', targetController.findOne)
+
 router.post('/update', targetController.update)
 
 router.post('/del', targetController.del)

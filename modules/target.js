@@ -68,7 +68,7 @@ class TargetModel {
 
     // 创建文章类别
     static async create(data) {
-        console.log("开始创建-----------")
+      
         return await Target.create({
             title:data.title,
             target_type_id:data.target_type_id,

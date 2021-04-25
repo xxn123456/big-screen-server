@@ -16,7 +16,7 @@ router.post('/batchDel',target_typeController.batchDel)
 
 router.get('/findAllSoureType', target_typeController.findAllSoureType)
 
-
+router.get('/findTypeAndTarget', target_typeController.findTypeAndTarget)
 
 
 

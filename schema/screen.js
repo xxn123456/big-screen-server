@@ -20,7 +20,7 @@ module.exports = function(sequelize, DataTypes) {
         },
         // 大屏布局
         layout: {
-            type: DataTypes.STRING,
+            type: DataTypes.TEXT,
             field: 'layout'
         },
 
