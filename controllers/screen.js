@@ -221,6 +221,10 @@ class screenController {
 
         let title = req.title;
 
+        let targetNames = req.targetNames;
+
+    
+
 
 
 
@@ -236,7 +240,7 @@ class screenController {
 
         
 
-        let Prod_config = new prod_config(type,content,option,title);
+        let Prod_config = new prod_config(type,content,option,title,targetNames);
 
         await Prod_config.handleTarget();
 
