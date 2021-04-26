@@ -35,6 +35,10 @@ router.post('/del', screenController.del)
 
 router.post('/batchDel', screenController.batchDel)
 
+router.post('/prod_option', screenController.prod_option)
+
+
+
 router.post('/upload', upload.single('file'), async (ctx, next) => {
     try {
         ctx.response.status = 200;

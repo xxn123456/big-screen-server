@@ -68,12 +68,12 @@ class TargetModel {
 
     // 创建文章类别
     static async create(data) {
-      
+
         return await Target.create({
-            title:data.title,
-            target_type_id:data.target_type_id,
+            title: data.title,
+            target_type_id: data.target_type_id,
             source_id: data.source_id,
-            source_type_id:data.source_type_id,
+            source_type_id: data.source_type_id,
             sql_order: data.sql_order,
             content: data.content
         });
@@ -85,7 +85,7 @@ class TargetModel {
             title: data.title,
             target_type_id: data.target_type_id,
             source_id: data.source_id,
-            source_type_id:data.source_type_id,
+            source_type_id: data.source_type_id,
             sql_order: data.sql_order,
             content: data.content
 
@@ -118,20 +118,25 @@ class TargetModel {
     //  */
     static async getDetail(id) {
         return await Target.findOne({
+            attributes: ['id', 'title', 'sql_order', 'content'],
             where: {
                 id
             },
-            include: [
-                {
-                    model: Target_type
+            include: [{
+                    
+                    model: Target_type,
+                    attributes: ['id', 'title'],
                 },
                 {
-                    model: Source
+
+                    model: Source,
+                    attributes: ['id', 'title'],
                 },
                 {
-                     model: Source_type
+                    model: Source_type,
+                    attributes: ['id', 'catename'],
                 }
-                
+
             ],
         });
     }
@@ -160,8 +165,7 @@ class TargetModel {
                 [Op.and]: criteria
 
             },
-            include: [
-                {
+            include: [{
                     model: Target_type
                 },
                 {
@@ -169,8 +173,8 @@ class TargetModel {
                 },
                 {
                     model: Source_type
-               }
-                
+                }
+
             ],
             //offet去掉前多少个数据
             offset,

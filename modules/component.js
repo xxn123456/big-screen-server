@@ -88,9 +88,14 @@ class ComponentModel {
      */
     static async getDetail(id) {
         return await Component.findOne({
+            attributes: ['id','name','option'],
             where: {
                 id
-            }
+            },
+            include: [{
+                model: Component_type,
+                attributes: ['id','categoryName'],
+            }]
         });
     }
 

@@ -1,4 +1,13 @@
-const screenModel = require('../modules/screen.js')
+
+const screenModel = require('../modules/screen.js');
+
+const ComponentModel = require('../modules/component.js');
+
+const TargetModel = require('../modules/target.js');
+
+
+
+const {prod_config} = require("../util/chart_option.js")
 
 class screenController {
 
@@ -199,6 +208,72 @@ class screenController {
 
 
     }
+
+
+    static async prod_option(ctx) {
+        let req = ctx.request.body;
+
+          // 折线图 [{"x":"洪山区","y":"11"}]; 1
+
+        let componet = await ComponentModel.getDetail(req.componet_id);
+
+        let tagert = await TargetModel.getDetail(req.target_id);
+
+        let title = req.title;
+
+
+
+
+        
+
+         let type,content,option;
+
+         type=componet.component_type.categoryName;
+
+         content=tagert.content;
+
+         option= componet.option;
+
+        
+
+        let Prod_config = new prod_config(type,content,option,title);
+
+        await Prod_config.handleTarget();
+
+        let data =await Prod_config.prod();
+
+
+
+            ctx.response.status = 200;
+            ctx.body = {
+                code: 200,
+                msg: '查找大屏详情成功',
+                data
+            }
+
+
+
+        // try {
+        //     let  data = await screenModel.getDetail(req.id);
+        //     ctx.response.status = 200;
+        //     ctx.body = {
+        //         code: 200,
+        //         msg: '查找大屏详情成功',
+        //         data
+        //     }
+        // } catch (err) {
+        //     ctx.response.status = 416;
+        //     ctx.body = {
+        //         code: 416 ,
+        //         msg: '查找大屏详情失败',
+        //         data: err
+        //     }
+
+        // }
+
+
+    }
+    // 折线图 [{"x":"洪山区","y":"11"}]
 
 }
 module.exports = screenController
