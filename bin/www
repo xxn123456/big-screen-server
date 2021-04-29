@@ -21,11 +21,33 @@ var port = normalizePort(process.env.PORT || '3000');
 
 var server = http.createServer(app.callback());
 
+
+const io = require('socket.io')(server); //核心，实现客户端之间交互通信
+
+const {screenSocket} = require("../controllers/socket.js")
+
+// socket.emit: 告诉当前用户
+// io.emit : 广播事件
+
+io.on("connection", socket => {
+    
+
+    screenSocket(io,socket);
+})
+
+
+
+
+
 /**
  * Listen on provided port, on all network interfaces.
  */
 
 server.listen(port);
+
+
+
+
 server.on('error', onError);
 server.on('listening', onListening);
 

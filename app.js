@@ -53,6 +53,12 @@ const registerRouter = require('./routes/mian.js');
 
 
 
+
+
+
+
+
+
 onerror(app)
 
 
@@ -109,7 +115,7 @@ app.use(async (ctx, next) => {
 app.use(koajwt({
     secret: '123456'
 }).unless({
-    path: [/^\/user\/regist/, /^\/user\/login/, /^\/public\*/, /^\/static/]
+    path: [/^\/user\/regist/, /^\/user\/login/, /^\/public\*/, /^\/static/, /^\/socket.io/]
 
 }))
 module.exports = app
