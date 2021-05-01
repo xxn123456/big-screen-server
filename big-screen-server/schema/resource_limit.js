@@ -1,33 +1,48 @@
 const moment = require("moment");
-module.exports = function(sequelize, DataTypes) {
-    const Screen = sequelize.define('screen', {
+module.exports = function (sequelize, DataTypes) {
+    const Resource_limit = sequelize.define('resource_limit', {
         id: {
             type: DataTypes.INTEGER,
             primaryKey: true,
             allowNull: true,
             autoIncrement: true
         },
-        //大屏名称
-        title: {
+        // 公司名称
+        company_name: {
             type: DataTypes.STRING,
             allowNull: false,
-            field: 'title'
-        },
-        // 大屏封面
-        conver: {
-            type: DataTypes.STRING,
-            field: 'conver',
-            default:"#"
-           
-        },
-        // 大屏布局
-        layout: {
-            type: DataTypes.TEXT,
-            field: 'layout',
-            default:'[]'
+            field: 'company_name'
         },
 
-        //大屏创建人
+        // 公司电话
+        company_phone: {
+            type: DataTypes.STRING,
+            allowNull: false,
+            field: 'company_phone'
+        },
+        // 权限状态
+        state: {
+            type: DataTypes.STRING,
+            allowNull: false,
+            field: 'state'
+        },
+
+        // 拥有权限
+
+        limit: {
+            type: DataTypes.STRING,
+            allowNull: false,
+            field: 'limit'
+        },
+
+
+
+
+
+
+
+
+        // 类别创建人
         user_id: {
             type: DataTypes.STRING,
             allowNull: false,
@@ -36,18 +51,18 @@ module.exports = function(sequelize, DataTypes) {
         // 创建时间
         createdAt: {
             type: DataTypes.DATE,
-            get () {
+            get() {
                 // console.log(this.getDataValue('created_time'))
                 return this.getDataValue('createdAt') ? moment(this.getDataValue('createdAt')).format('YYYY-MM-DD HH:mm:ss') : null;
-              }
+            }
         },
         // 更新时间
         updatedAt: {
             type: DataTypes.DATE,
-            get () {
+            get() {
                 // console.log(this.getDataValue('created_time'))
                 return this.getDataValue('updatedAt') ? moment(this.getDataValue('updatedAt')).format('YYYY-MM-DD HH:mm:ss') : null;
-              }
+            }
         }
     }, {
         /**
@@ -57,5 +72,5 @@ module.exports = function(sequelize, DataTypes) {
          */
         freezeTableName: true
     });
-    return Screen
+    return Resource_limit
 }

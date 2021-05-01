@@ -1,37 +1,40 @@
 const moment = require("moment");
 module.exports = function(sequelize, DataTypes) {
-    const Screen = sequelize.define('screen', {
+    const Component = sequelize.define('component', {
         id: {
             type: DataTypes.INTEGER,
             primaryKey: true,
             allowNull: true,
             autoIncrement: true
         },
-        //大屏名称
-        title: {
+        //组件名称
+        name: {
             type: DataTypes.STRING,
             allowNull: false,
-            field: 'title'
+            field: 'name'
         },
-        // 大屏封面
-        conver: {
+        // 组件类别
+        component_type_id: {
+            type: DataTypes.INTEGER,
+            allowNull: false,
+            field: 'component_type_id'
+        },
+        // 组件图片
+        component_pic: {
             type: DataTypes.STRING,
-            field: 'conver',
-            default:"#"
-           
-        },
-        // 大屏布局
-        layout: {
-            type: DataTypes.TEXT,
-            field: 'layout',
-            default:'[]'
+            allowNull: false,
+            field: 'component_pic'
         },
 
-        //大屏创建人
-        user_id: {
+        option: {
+            type: DataTypes.TEXT,
+            field: 'option'
+        },
+        // 组件别名
+        other_name: {
             type: DataTypes.STRING,
             allowNull: false,
-            field: 'user_id'
+            field: 'other_name'
         },
         // 创建时间
         createdAt: {
@@ -57,5 +60,5 @@ module.exports = function(sequelize, DataTypes) {
          */
         freezeTableName: true
     });
-    return Screen
+    return Component
 }

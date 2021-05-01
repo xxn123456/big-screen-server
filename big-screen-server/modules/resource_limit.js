@@ -8,17 +8,12 @@ const {
 } = require("sequelize");
 
 // 引入数据表模型
-const Screen = Sequelize.import('../schema/screen.js');
-Screen.sync({
+const Resource_limit = Sequelize.import('../schema/resource_limit.js');
+Resource_limit.sync({
     force: false
 }); //自动创建表
 
-
-const User = Sequelize.import('../schema/user');
-
-Screen.belongsTo(User,{foreignKey:'user_id'});
-
-class ScreenModel {
+class ResourceModel {
     /**
      * 创建文章模型
      * @param data
@@ -26,19 +21,16 @@ class ScreenModel {
      */
     // 创建文章类别
     static async create(data) {
-        return await Screen.create({
-            title: data.title, //标题
-            conver:data.conver,
-            layout:data.layout,
-            user_id:data.user_id
+        return await Resource_limit.create({
+            categoryName: data.categoryName, //标题
+            categoryCreater: data.categoryCreater
         });
     }
     // 更新文章类别
-    static async update(data) {
-        return await Screen.update({
-            title: data.title, //标题
-            conver:data.conver,
-            layout:data.layout
+    static async upDate(data) {
+        return await Resource_limit.update({
+            categoryName: data.categoryName, //标题
+            categoryCreater: data.categoryCreater
         }, {
             where: {
                 id: data.id
@@ -47,7 +39,7 @@ class ScreenModel {
     }
     // 对文章进行删除
     static async del(id) {
-        return await Screen.destroy({
+        return await Resource_limit.destroy({
             where: {
                 id
             }
@@ -56,7 +48,7 @@ class ScreenModel {
     
     // 对文章批量删除
     static async bacthDel(data) {
-                return await Screen.destroy({
+                return await Resource_limit.destroy({
                     where: {
                         id: data
                     }
@@ -68,29 +60,23 @@ class ScreenModel {
      * @returns {Promise<Model>}
      */
     static async getDetail(id) {
-        return await Screen.findOne({
+        return await Resource_limit.findOne({
             where: {
                 id
             }
         });
     }
-
-    static async findAllScreen(data) {
-        return await Screen.findAll({
-            attributes: [['id','value'],['title','label']],
-        });
-        
-    }
     // 对文章类别进行搜索分页显示
-    static async findAll(data) {
+    static async finAll(data) {
         let offset = data.pageSize * (data.currentPage - 1);
         let limit = parseInt(data.pageSize);
 
         let criteria = [];
-        if(data.name){
-            criteria.push({name:data.name}); 
-        }
 
+        if(data.categoryName){
+            criteria.push({categoryName:data.categoryName})
+           
+        }
         if(data.startTime||data.endTime){
             criteria.push({
                             
@@ -102,16 +88,12 @@ class ScreenModel {
            
         }
 
-        return await Screen.findAndCountAll({
+        return await Resource_limit.findAndCountAll({
             
             where: {
                 [Op.and]:criteria
             
             },
-            include: [{   
-                                 model: User,
-                                 attributes: { exclude: ['password'] }
-                            }],
             //offet去掉前多少个数据
             offset,
             //limit每页数据数量
@@ -126,4 +108,4 @@ class ScreenModel {
 
 }
 
-module.exports = ScreenModel;
+module.exports = ResourceModel;

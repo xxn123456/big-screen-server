@@ -8,7 +8,7 @@ const {
 } = require("sequelize");
 
 // 引入数据表模型
-const Component = Sequelize.import('../schema/component.js');
+const Component = Sequelize.import('../schema/Component.js');
 
 const Component_type = Sequelize.import('../schema/component_type.js');
 

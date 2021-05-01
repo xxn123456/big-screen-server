@@ -1,38 +1,32 @@
 const moment = require("moment");
 module.exports = function(sequelize, DataTypes) {
-    const Screen = sequelize.define('screen', {
+    const Role = sequelize.define('role', {
         id: {
             type: DataTypes.INTEGER,
             primaryKey: true,
             allowNull: true,
             autoIncrement: true
         },
-        //大屏名称
-        title: {
+        //角色名称
+        name: {
             type: DataTypes.STRING,
             allowNull: false,
-            field: 'title'
-        },
-        // 大屏封面
-        conver: {
-            type: DataTypes.STRING,
-            field: 'conver',
-            default:"#"
-           
-        },
-        // 大屏布局
-        layout: {
-            type: DataTypes.TEXT,
-            field: 'layout',
-            default:'[]'
+            field: 'name'
         },
 
-        //大屏创建人
-        user_id: {
+        // 角色路由
+        role_router: {
             type: DataTypes.STRING,
-            allowNull: false,
-            field: 'user_id'
+            field: 'role_router'
         },
+        // 角色拥有大屏
+        role_screen: {
+            type: DataTypes.STRING,
+            field: 'role_screen'
+        },
+
+
+
         // 创建时间
         createdAt: {
             type: DataTypes.DATE,
@@ -57,5 +51,5 @@ module.exports = function(sequelize, DataTypes) {
          */
         freezeTableName: true
     });
-    return Screen
+    return Role
 }

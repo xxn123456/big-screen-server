@@ -1,38 +1,48 @@
 const moment = require("moment");
 module.exports = function(sequelize, DataTypes) {
-    const Screen = sequelize.define('screen', {
+    const Menu = sequelize.define('menu', {
         id: {
             type: DataTypes.INTEGER,
             primaryKey: true,
             allowNull: true,
             autoIncrement: true
         },
-        //大屏名称
-        title: {
+        // 菜单名称
+        name: {
             type: DataTypes.STRING,
             allowNull: false,
-            field: 'title'
+            field: 'name'
         },
-        // 大屏封面
-        conver: {
+        // 菜单路径
+        path: {
             type: DataTypes.STRING,
-            field: 'conver',
-            default:"#"
-           
-        },
-        // 大屏布局
-        layout: {
-            type: DataTypes.TEXT,
-            field: 'layout',
-            default:'[]'
+            allowNull: false,
+            field: 'path'
         },
 
-        //大屏创建人
-        user_id: {
+        // vue 路由组件
+
+        router_compent: {
             type: DataTypes.STRING,
             allowNull: false,
-            field: 'user_id'
+            field: 'router_compent'
         },
+
+        // 上层id
+        p_id: {
+            type: DataTypes.INTEGER,
+            field: 'p_id',
+            default: 0
+        },
+
+        
+        // 角色路由
+        role_router: {
+            type: DataTypes.STRING,
+            allowNull: false,
+            field: 'role_router'
+        },
+
         // 创建时间
         createdAt: {
             type: DataTypes.DATE,
@@ -57,5 +67,5 @@ module.exports = function(sequelize, DataTypes) {
          */
         freezeTableName: true
     });
-    return Screen
+    return Menu
 }

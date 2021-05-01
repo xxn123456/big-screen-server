@@ -8,17 +8,22 @@ const {
 } = require("sequelize");
 
 // 引入数据表模型
-const Screen = Sequelize.import('../schema/screen.js');
-Screen.sync({
-    force: false
-}); //自动创建表
+const Component_type = Sequelize.import('../schema/component_type.js');
 
 
 const User = Sequelize.import('../schema/user');
 
-Screen.belongsTo(User,{foreignKey:'user_id'});
 
-class ScreenModel {
+Component_type.belongsTo(User,{foreignKey:'user_id'});
+
+
+
+
+Component_type.sync({
+    force: false
+}); //自动创建表
+
+class ComponentTypeModel {
     /**
      * 创建文章模型
      * @param data
@@ -26,19 +31,16 @@ class ScreenModel {
      */
     // 创建文章类别
     static async create(data) {
-        return await Screen.create({
-            title: data.title, //标题
-            conver:data.conver,
-            layout:data.layout,
-            user_id:data.user_id
+        return await Component_type.create({
+            categoryName: data.categoryName, //标题
+            user_id: data.user_id
         });
     }
     // 更新文章类别
     static async update(data) {
-        return await Screen.update({
-            title: data.title, //标题
-            conver:data.conver,
-            layout:data.layout
+        return await Component_type.update({
+            categoryName: data.categoryName, //标题
+            user_id: data.user_id
         }, {
             where: {
                 id: data.id
@@ -47,7 +49,7 @@ class ScreenModel {
     }
     // 对文章进行删除
     static async del(id) {
-        return await Screen.destroy({
+        return await Component_type.destroy({
             where: {
                 id
             }
@@ -56,7 +58,7 @@ class ScreenModel {
     
     // 对文章批量删除
     static async bacthDel(data) {
-                return await Screen.destroy({
+                return await Component_type.destroy({
                     where: {
                         id: data
                     }
@@ -68,17 +70,16 @@ class ScreenModel {
      * @returns {Promise<Model>}
      */
     static async getDetail(id) {
-        return await Screen.findOne({
+        return await Component_type.findOne({
             where: {
                 id
             }
         });
     }
 
-    static async findAllScreen(data) {
-        return await Screen.findAll({
-            attributes: [['id','value'],['title','label']],
-        });
+    static async findAllComponentType(data){
+        return await Component_type.findAll({});
+
         
     }
     // 对文章类别进行搜索分页显示
@@ -87,10 +88,11 @@ class ScreenModel {
         let limit = parseInt(data.pageSize);
 
         let criteria = [];
-        if(data.name){
-            criteria.push({name:data.name}); 
-        }
 
+        if(data.categoryName){
+            criteria.push({categoryName:data.categoryName})
+           
+        }
         if(data.startTime||data.endTime){
             criteria.push({
                             
@@ -102,7 +104,7 @@ class ScreenModel {
            
         }
 
-        return await Screen.findAndCountAll({
+        return await Component_type.findAndCountAll({
             
             where: {
                 [Op.and]:criteria
@@ -110,7 +112,7 @@ class ScreenModel {
             },
             include: [{   
                                  model: User,
-                                 attributes: { exclude: ['password'] }
+                                attributes: { exclude: ['password'] }
                             }],
             //offet去掉前多少个数据
             offset,
@@ -126,4 +128,4 @@ class ScreenModel {
 
 }
 
-module.exports = ScreenModel;
+module.exports = ComponentTypeModel;

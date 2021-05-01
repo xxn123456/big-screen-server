@@ -38,7 +38,8 @@ class ScreenModel {
         return await Screen.update({
             title: data.title, //标题
             conver:data.conver,
-            layout:data.layout
+            layout:data.layout,
+            user_id:data.user_id
         }, {
             where: {
                 id: data.id

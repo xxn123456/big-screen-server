@@ -8,37 +8,37 @@ const {
 } = require("sequelize");
 
 // 引入数据表模型
-const Screen = Sequelize.import('../schema/screen.js');
-Screen.sync({
+const Role = Sequelize.import('../schema/role.js');
+
+const Menu = Sequelize.import('../schema/menu.js');
+
+
+
+
+Role.sync({
     force: false
 }); //自动创建表
 
-
-const User = Sequelize.import('../schema/user');
-
-Screen.belongsTo(User,{foreignKey:'user_id'});
-
-class ScreenModel {
+class RoleModel {
     /**
      * 创建文章模型
      * @param data
      * @returns {Promise<*>}
-     */
+     */ 
     // 创建文章类别
     static async create(data) {
-        return await Screen.create({
-            title: data.title, //标题
-            conver:data.conver,
-            layout:data.layout,
-            user_id:data.user_id
+        return await Role.create({
+            name: data.name,
+            role_router: data.role_router,
+            role_screen: data.role_screen
         });
     }
     // 更新文章类别
     static async update(data) {
-        return await Screen.update({
-            title: data.title, //标题
-            conver:data.conver,
-            layout:data.layout
+        return await Role.update({
+            name: data.name,
+            role_router: data.role_router,
+            role_screen: data.role_screen
         }, {
             where: {
                 id: data.id
@@ -47,7 +47,7 @@ class ScreenModel {
     }
     // 对文章进行删除
     static async del(id) {
-        return await Screen.destroy({
+        return await Role.destroy({
             where: {
                 id
             }
@@ -56,7 +56,7 @@ class ScreenModel {
     
     // 对文章批量删除
     static async bacthDel(data) {
-                return await Screen.destroy({
+                return await Role.destroy({
                     where: {
                         id: data
                     }
@@ -68,18 +68,29 @@ class ScreenModel {
      * @returns {Promise<Model>}
      */
     static async getDetail(id) {
-        return await Screen.findOne({
+        return await Role.findOne({
             where: {
                 id
             }
         });
     }
 
-    static async findAllScreen(data) {
-        return await Screen.findAll({
-            attributes: [['id','value'],['title','label']],
-        });
-        
+    static async findRoleMenu(data) {
+        return await Role.findAll({
+            where:{
+                id:data.id
+            }
+      });
+    }
+
+    static async findMenuByRole(menuIds) {
+        let criteria = [];
+        if(menuIds){
+            criteria['id']=menuIds
+        }
+        return await Menu.findAll({
+           where: criteria
+        })
     }
     // 对文章类别进行搜索分页显示
     static async findAll(data) {
@@ -87,31 +98,15 @@ class ScreenModel {
         let limit = parseInt(data.pageSize);
 
         let criteria = [];
+
         if(data.name){
-            criteria.push({name:data.name}); 
+            criteria.push({name:data.name})
         }
-
-        if(data.startTime||data.endTime){
-            criteria.push({
-                            
-                createdAt: {
-                    [Op.between]: [new Date(data.startTime), new Date(data.endTime)]
-
-                }
-            })
-           
-        }
-
-        return await Screen.findAndCountAll({
-            
+    
+        return await Role.findAndCountAll({
             where: {
                 [Op.and]:criteria
-            
             },
-            include: [{   
-                                 model: User,
-                                 attributes: { exclude: ['password'] }
-                            }],
             //offet去掉前多少个数据
             offset,
             //limit每页数据数量
@@ -119,11 +114,15 @@ class ScreenModel {
 
         })
         
+    }
 
-   
-
+      // 查询所有角色
+    static async findAllRole(data) {
+    
+        return await Role.findAll({})
+        
     }
 
 }
 
-module.exports = ScreenModel;
+module.exports = RoleModel;

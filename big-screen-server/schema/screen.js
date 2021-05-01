@@ -17,14 +17,12 @@ module.exports = function(sequelize, DataTypes) {
         conver: {
             type: DataTypes.STRING,
             field: 'conver',
-            default:"#"
-           
+            default:'[]'
         },
         // 大屏布局
         layout: {
             type: DataTypes.TEXT,
-            field: 'layout',
-            default:'[]'
+            field: 'layout'
         },
 
         //大屏创建人
