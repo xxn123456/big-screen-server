@@ -5,6 +5,8 @@
 
 ``` js
 
+线上测试账号可以找本人提供,禁止非法操作数据
+
 // 线上测试地址
 
 http://shutiaogege.top/chart/#/login?redirect=%2FscreenAdmin%2Fuser
