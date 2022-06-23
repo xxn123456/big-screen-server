@@ -10,20 +10,22 @@ module.exports = function(sequelize, DataTypes) {
                 allowNull: true,
                 autoIncrement: true
             },
-            userName: {
+            username: {
                 type: DataTypes.STRING,
                 allowNull: false,
-                field: 'userName'
+                field: 'username'
             },
             password: {
                 type: DataTypes.STRING,
                 allowNull: false,
-                field: 'password'
+                field: 'password',
+                get() {
+                    return "******";
+                  }
             },
             avatar:{
                 type: DataTypes.STRING,
-                field: 'avatar',
-                default:"shutiaogege.top/xxx.png"
+                field: 'avatar'
             },
             role_id:{
                 type: DataTypes.INTEGER,

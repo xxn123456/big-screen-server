@@ -13,8 +13,8 @@ class userController {
     //注册用户
     static async create(ctx) {
         let req = ctx.request.body;
-        if (req.userName && req.password) {
-            const query = await userModule.getUserInfo(req.userName);
+        if (req.username && req.password) {
+            const query = await userModule.getUserInfo(req.username);
             if (query) {
                 ctx.response.status = 200;
                 ctx.body = {
@@ -41,23 +41,53 @@ class userController {
         }
     }
 
+    static async update(ctx) {
+        let req = ctx.request.body;
+
+        
+    
+        try {
+
+        let user = await userModule.update(req);
+        ctx.response.status = 200;
+        ctx.body = {
+            code: 200,
+            desc: '用户修改成功',
+            data: user
+        }
+
+           
+            
+        } catch (error) {
+
+            ctx.response.status = 500;
+            ctx.body = {
+                code: 500,
+                desc: '用户修改成功',
+                data: error
+            }
+        
+            
+        }
+    }
+
     // 登录用户
     static async login(ctx) {
         const req = ctx.request.body;
-        if (!req.userName || !req.password) {
+        if (!req.username || !req.password) {
             return ctx.body = {
                 code: '-1',
                 msg: '用户名或密码不能为空'
             }
 
         } else {
-            const info = await userModule.getUserInfo(req.userName);
+            const info = await userModule.getUserInfo(req.username);
             console.log("获取用户信息",info)
             if (info) {
                 if (info.password === req.password) {
-                    ctx.session.userInfo = req.userName;
+                    ctx.session.userInfo = req.username;
                     const token = jwt.sign({
-                        user: req.userName,
+                        user: req.username,
                         passWord: req.password
                     }, '123456', {
                         expiresIn: expireTime
@@ -107,31 +137,39 @@ class userController {
     //用户分页
     static async findAll(ctx) {
         const req = ctx.request.body;
-        if (req.pageSize && req.currentPage) {
-            try {
-                let data = await userModule.findAll(req);
-                ctx.response.status = 200;
-                return ctx.body = {
-                    code: 200,
-                    desc: '返回用户分页',
-                    data
-                }
-            } catch (error) {
-                ctx.response.status = 416;
-                ctx.body = {
-                    code: -1,
-                    desc: '参数异常',
-                    error
-                }
-            }
+
+        let data = await userModule.findAll(req);
+        ctx.response.status = 200;
+        return ctx.body = {
+            code: 200,
+            desc: '返回用户分页',
+            data
         }
+        // if (req.pageSize && req.currentPage) {
+        //     try {
+        //         let data = await userModule.findAll(req);
+        //         ctx.response.status = 200;
+        //         return ctx.body = {
+        //             code: 200,
+        //             desc: '返回用户分页',
+        //             data
+        //         }
+        //     } catch (error) {
+        //         ctx.response.status = 416;
+        //         ctx.body = {
+        //             code: -1,
+        //             desc: '参数异常',
+        //             error
+        //         }
+        //     }
+        // }
     }
 
     // 获取用户信息
 
     static async getUserInfo(ctx) {
         const token = ctx.headers.authorization;
-        console.log("是否获取到token", token)
+       
         if (token) {
             try {
                 let result = await tools.verToken(token);
